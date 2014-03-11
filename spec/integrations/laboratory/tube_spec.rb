@@ -123,11 +123,13 @@ describe Lims::LaboratoryApp::Laboratory::Tube do
       let(:volume) { 100 }
       let(:sample_uuid) { '11111111-2222-3333-4444-555555555555' }
       let(:sample_name) { "sample 1" }
+
       context "to an existing target tube" do
+        let(:asset_to_create) { Lims::LaboratoryApp::Laboratory::Tube }
         include_context "aliquots with solvent"
-        include_context "for creating a tube with aliquot and solvent in it"
+        include_context "for creating a tube-like asset with aliquot and solvent in it"
         include_context "for creating an empty tube without aliquots"
-        let(:transfers) { [ { "source_uuid" => source_tube1_uuid,
+        let(:transfers) { [ { "source_uuid" => source_tube_like1_uuid,
                               "target_uuid" => target_tube2_uuid,
                               "amount" => 100,
                               "aliquot_type" => "RNA"}
@@ -136,7 +138,7 @@ describe Lims::LaboratoryApp::Laboratory::Tube do
         let(:parameters) { { :transfer_tubes_to_tubes => { :transfers => transfers} }}
 
         let(:expected_json) {
-          source_tube1_url = "http://example.org/#{source_tube1_uuid}"
+          source_tube1_url = "http://example.org/#{source_tube_like1_uuid}"
           target_tube2_url = "http://example.org/#{target_tube2_uuid}"
           { :transfer_tubes_to_tubes =>
             { :actions => {},
@@ -151,7 +153,7 @@ describe Lims::LaboratoryApp::Laboratory::Tube do
                         "update" => source_tube1_url,
                         "delete" => source_tube1_url
                       },
-                      "uuid" => source_tube1_uuid,
+                      "uuid" => source_tube_like1_uuid,
                       "location" => location,
                       "type" => nil,
                       "max_volume" => nil,
@@ -184,9 +186,10 @@ describe Lims::LaboratoryApp::Laboratory::Tube do
 
       context "to an existing target spin column" do
         include_context "aliquots with solvent"
-        include_context "for creating a tube with aliquot and solvent in it"
+        include_context "for creating a tube-like asset with aliquot and solvent in it"
         include_context "for creating an empty spin column without aliquots"
-        let(:transfers) { [ { "source_uuid" => source_tube1_uuid,
+        let(:asset_to_create) { Lims::LaboratoryApp::Laboratory::Tube }
+        let(:transfers) { [ { "source_uuid" => source_tube_like1_uuid,
                               "target_uuid" => target_spin_column_uuid,
                               "amount" => 100,
                               "aliquot_type" => "RNA"}
@@ -195,7 +198,7 @@ describe Lims::LaboratoryApp::Laboratory::Tube do
         let(:parameters) { { :transfer_tubes_to_tubes => { :transfers => transfers} }}
 
         let(:expected_json) {
-          source_tube1_url = "http://example.org/#{source_tube1_uuid}"
+          source_tube1_url = "http://example.org/#{source_tube_like1_uuid}"
           target_spin_column_url = "http://example.org/#{target_spin_column_uuid}"
           { :transfer_tubes_to_tubes =>
             { :actions => {},
@@ -210,7 +213,7 @@ describe Lims::LaboratoryApp::Laboratory::Tube do
                         "update" => source_tube1_url,
                         "delete" => source_tube1_url
                       },
-                      "uuid" => source_tube1_uuid,
+                      "uuid" => source_tube_like1_uuid,
                       "location" => location,
                       "type" => nil,
                       "max_volume" => nil,
@@ -241,14 +244,15 @@ describe Lims::LaboratoryApp::Laboratory::Tube do
 
       context "to an existing target tube AND spin column", :sp_test => true do
         include_context "aliquots with solvent"
-        include_context "for creating a tube with aliquot and solvent in it"
+        include_context "for creating a tube-like asset with aliquot and solvent in it"
         include_context "for creating an empty tube without aliquots"
         include_context "for creating an empty spin column without aliquots"
-        let(:transfers) { [ { "source_uuid" => source_tube1_uuid,
+        let(:asset_to_create) { Lims::LaboratoryApp::Laboratory::Tube }
+        let(:transfers) { [ { "source_uuid" => source_tube_like1_uuid,
                               "target_uuid" => target_tube2_uuid,
                               "fraction" => 0.5,
                               "aliquot_type" => "DNA"},
-                            { "source_uuid" => source_tube1_uuid,
+                            { "source_uuid" => source_tube_like1_uuid,
                               "target_uuid" => target_spin_column_uuid,
                               "fraction" => 0.5,
                               "aliquot_type" => "RNA"}
@@ -257,7 +261,7 @@ describe Lims::LaboratoryApp::Laboratory::Tube do
         let(:parameters) { { :transfer_tubes_to_tubes => { :transfers => transfers} }}
 
         let(:expected_json) {
-          source_tube1_url = "http://example.org/#{source_tube1_uuid}"
+          source_tube1_url = "http://example.org/#{source_tube_like1_uuid}"
           target_tube2_url = "http://example.org/#{target_tube2_uuid}"
           target_spin_column_url = "http://example.org/#{target_spin_column_uuid}"
           { :transfer_tubes_to_tubes =>
@@ -273,7 +277,7 @@ describe Lims::LaboratoryApp::Laboratory::Tube do
                         "update" => source_tube1_url,
                         "delete" => source_tube1_url
                       },
-                      "uuid" => source_tube1_uuid,
+                      "uuid" => source_tube_like1_uuid,
                       "location" => location,
                       "type" => nil,
                       "max_volume" => nil,

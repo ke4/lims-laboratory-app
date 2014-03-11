@@ -38,6 +38,23 @@ shared_context "with filled aliquots" do
 end
 
 shared_context "aliquots with solvent" do
+  let(:fp_aliquot_array_source) {
+    path = "http://example.org/#{sample_uuid}"
+      [
+        { "sample"=> {"actions" => { "read" => path,
+          "create" => path,
+          "update" => path,
+          "delete" => path },
+        "uuid" => sample_uuid,
+        "name" => sample_name},
+        "quantity" => quantity,
+        "type" => aliquot_type,
+        "unit" => unit_type
+        },
+        fp_solvent
+      ]
+  }
+
   let(:aliquot_array_source) {
     path = "http://example.org/#{sample_uuid}"
       [
@@ -124,6 +141,7 @@ shared_context "aliquots with solvent" do
   }
 
   let(:solvent) { {"quantity" => 0, "type" => "solvent", "unit" => "ul"} }
+  let(:fp_solvent) { {"quantity" => 100, "type" => "solvent", "unit" => "ul"} }
   let(:solvent_with_fraction) { {"quantity" => 0, "type" => "solvent", "unit" => "ul"} }
 
   # currently we also change the water to the given aliquot type

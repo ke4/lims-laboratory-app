@@ -26,25 +26,25 @@ shared_context "for tube with samples and labels" do
   let(:label_parameters) {{ :labellables => labellable }}
 end
 
-shared_context "for spin column with samples and labels" do
+shared_context "for tube-like asset with samples and labels" do
   include_context "for tube-like asset with samples"
   let(:label_parameters) {{ :labellables => labellable }}
 end
 
-shared_context "for creating a tube with aliquot and solvent in it" do
-  let(:source_tube1_uuid) { '22222222-3333-4444-1111-000000000000'.tap do |uuid|
+shared_context "for creating a tube-like asset with aliquot and solvent in it" do
+  let(:source_tube_like1_uuid) { '22222222-3333-4444-1111-000000000000'.tap do |uuid|
     store.with_session do |session|
       quantity = 100
-      tube = Lims::LaboratoryApp::Laboratory::Tube.new
+      tube_like_asset = asset_to_create.new
 #            (1..5).each do |i|
         sample = Lims::LaboratoryApp::Laboratory::Sample.new(:name => "sample 1")
         aliquot = Lims::LaboratoryApp::Laboratory::Aliquot.new(:sample => sample, :quantity => 100, :type => aliquot_type)
-        tube << aliquot
+      tube_like_asset << aliquot
 #            end
-      tube << Lims::LaboratoryApp::Laboratory::Aliquot.new(:type => Lims::LaboratoryApp::Laboratory::Aliquot::Solvent, :quantity => volume)
+      tube_like_asset << Lims::LaboratoryApp::Laboratory::Aliquot.new(:type => Lims::LaboratoryApp::Laboratory::Aliquot::Solvent, :quantity => volume)
 
-      session << tube
-      set_uuid(session, tube, uuid)
+      session << tube_like_asset
+      set_uuid(session, tube_like_asset, uuid)
     end
   end
   }
