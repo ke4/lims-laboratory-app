@@ -1,7 +1,16 @@
 rvm:
   - "1.9.3"
 
+env:
+  - DB=mysql
+
 before_install: gem install bundler
+
+before_script:
+  - mysql -uroot -p -e "DROP DATABASE IF EXISTS laboratory_development; CREATE DATABASE laboratory_development DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"
+
+script:
+  - RAILS_ENV=bundle exec sequel -m ./db/migrations -e development_mysql config/database.yml
 
 install: bundle install --without debugging
 
